@@ -35,7 +35,7 @@ namespace BankAppER.Models
 
         }.AsQueryable();
 
-        public void InitializeCustomers()
+        private void InitializeCustomers()
         {
             Customers.ToArray()[0].CustomerAccounts = Accounts.Take(3).ToList();
             Customers.ToArray()[1].CustomerAccounts = Accounts.Skip(3).Take(4).ToList();

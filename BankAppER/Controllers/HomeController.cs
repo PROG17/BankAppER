@@ -6,14 +6,32 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BankAppER.Models;
 
+
+
 namespace BankAppER.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly IBankRepository _repo;
+
+        public HomeController(IBankRepository repo)
+        {
+            _repo = repo;
+        }
+
+
+
+
         public IActionResult Index()
         {
-            return View();
+            var model = _repo.GetCustomers().ToList();
+
+            return View(model);
         }
+
+
+
 
         public IActionResult About()
         {

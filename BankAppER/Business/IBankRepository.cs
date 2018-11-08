@@ -1,16 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BankAppER.Models;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace BankAppER.Models
+
+
+namespace BankAppER.Business
 {
     public interface IBankRepository
     {
         IQueryable<Customer> GetCustomers();
+
         Customer GetCustomerById(int id);
 
         IQueryable<Account> GetAccounts();
+
         Account GetAccountById(int id);
+
+        // Operations
+        bool Deposit(Transaction trans);    // Insättning
+
+        bool Withdrawal(Transaction trans); // Uttag
+
     }
 }

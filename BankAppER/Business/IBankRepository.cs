@@ -16,9 +16,9 @@ namespace BankAppER.Business
         Account GetAccountById(int id);
 
         // Operations
-        bool Deposit(Transaction trans);    // Insättning
+        bool Deposit(Transaction trans, Account account);    // Insättning
 
-        bool Withdrawal(Transaction trans); // Uttag
+        bool Withdrawal(Transaction trans, Account account); // Uttag
 
     }
 }

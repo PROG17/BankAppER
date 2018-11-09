@@ -1,9 +1,6 @@
 ﻿using BankAppER.Business;
 using BankAppER.Models;
-using System;
-using System.Linq;
 using Xunit;
-using Moq;
 
 
 namespace BankAppER.Test
@@ -11,73 +8,103 @@ namespace BankAppER.Test
     public class BankApp_Tests
     {
 
-        private BankRepository _repository;
-        private Mock<DbSet<SomeClass>> _mockSomeClass;
-
-        
-        public void TestSetUp()
+        [Fact]
+        public void Balance_updated_correctly_when_Deposit()
         {
-            _mockSomeClass = new Mock<DbSet<SomeClass>>();
+            // ARRANGE
+            decimal startBalance = 1000m;
+            decimal deposit = 150.00m; // Insättning
 
-            var mockContext = new Mock<IApplicationDbContext>();
-            mockContext.SetupGet(c => c.SomeClass).Returns(_mockSomeClass.Object);
+            var bankRepo = new BankRepository();
 
-            _repository = new SomeClassRepository(mockContext.Object);
+            var account = new Account()
+            {
+                Id = 20,
+                Balance = startBalance
+            };
+
+            var transaction = new Transaction()
+            {
+                Amount = deposit,
+                Balance = startBalance,
+                AccountId = 20
+            };
+
+            // ACT
+            var result = bankRepo.Deposit(transaction, account);
+            var expected_balance = 1150.00m;
+
+            // ASSERT
+            Assert.True(result);
+            Assert.Equal(expected_balance, account.Balance);
         }
-
-
 
         [Fact]
         public void Balance_updated_correctly_when_Withdrawal_with_Amount_which_is_Lower_than_Balance()
         {
-            //arrange
+            // ARRANGE
             decimal startBalance = 1000m;
             decimal withdrawal = 150.00m; // Uttag
 
-            var account = new Account();
-            var lastId = _repo.GetAccounts().OrderByDescending(c => c.Id).FirstOrDefault().Id;
+            var bankRepo = new BankRepository();
 
-            account.Id = lastId + 1;
-            account.CustomerId = 1;
-            account.Balance = startBalance;
+            var account = new Account()
+            {
+                Id = 20,
+                Balance = startBalance
+            };
 
-            var trans = new Transaction();
-
-            trans.Amount = withdrawal;
-            trans.Balance = startBalance;
+            var transaction = new Transaction()
+            {
+                Amount = withdrawal,
+                Balance = startBalance,
+                AccountId = 20
+            };
 
             // ACT
-            var result = _repo.Withdrawal(trans);
+            var result = bankRepo.Withdrawal(transaction, account);
+            var expected_balance = 850.00m;
 
-            //ASSERT
+            // ASSERT
             Assert.True(result);
-            Assert.Equal(850, account.Balance);
+            Assert.Equal(expected_balance, account.Balance);
         }
-
 
 
         [Fact]
         public void Withdrawal_Fails_when_Amount_is_greater_than_Balance()
         {
-            // Arrange
+            // ARRANGE
             decimal startBalance = 100.00m;
-            decimal withdrawal =  150.00m; // Uttag
+            decimal withdrawal = 150.00m; // Uttag
 
-            var account = _repo.GetAccountById(1);
-            account.Balance = startBalance;
+            var bankRepo = new BankRepository();
 
-            var trans = new Transaction();
-            trans.Date = DateTime.Now;
-            trans.Amount = withdrawal;
-            trans.Balance = startBalance;
-            trans.AccountId = account.Id;
+            var account = new Account()
+            {
+                Id = 20,
+                Balance = startBalance
+            };
+
+            var transaction = new Transaction()
+            {
+                Amount = withdrawal,
+                Balance = startBalance,
+                AccountId = 20
+            };
 
             // ACT
-            var result = _repo.Withdrawal(trans);
+            var result = bankRepo.Withdrawal(transaction, account);
+            var expected_balance = 100.00m;
 
-            //ASSERT
+            // ASSERT
             Assert.False(result);
+            Assert.Equal(expected_balance, account.Balance);
         }
+
+
+
+
 
     }
 }

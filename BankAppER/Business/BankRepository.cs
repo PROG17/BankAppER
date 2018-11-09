@@ -54,10 +54,8 @@ namespace BankAppER.Business
         public IQueryable<Customer> GetCustomers() => Customers;
 
 
-        public bool Deposit(Transaction trans)
+        public bool Deposit(Transaction trans, Account account)
         {
-            var account = GetAccountById(trans.AccountId);
-
             if (account == null)
                 return false;
 
@@ -71,10 +69,8 @@ namespace BankAppER.Business
         }
 
 
-        public bool Withdrawal(Transaction trans)
+        public bool Withdrawal(Transaction trans, Account account)
         {
-            var account = GetAccountById(trans.AccountId);
-
             if (account == null)
                 return false;
 

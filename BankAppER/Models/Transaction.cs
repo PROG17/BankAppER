@@ -21,21 +21,6 @@ namespace BankAppER.Models
 
         // Nav
         //public Account Account { get; set; }
-        
-        
-        
-        //// Constructor #1
-        //public Transaction()
-        //{
-
-        //}
-
-        //// Constructor #2
-        //public Transaction(DateTime date)
-        //{
-        //    Date = date;
-        //}
-
 
         //public string ShowOneTransaction() => $"  {AccountNr}             {Date.ToString("g")}           {Amount,17:N2} kr                        {Balance,17:N2} kr";
 

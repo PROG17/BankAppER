@@ -1,4 +1,5 @@
 ﻿using BankAppER.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 
@@ -14,6 +15,10 @@ namespace BankAppER.Business
         IQueryable<Account> GetAccounts();
 
         Account GetAccountById(int id);
+
+        List<Transaction> GetTransactions(int accountId);
+
+        void AddTransaction(Transaction transaction);
 
         // Operations
         bool Deposit(Transaction trans, Account account);    // Insättning

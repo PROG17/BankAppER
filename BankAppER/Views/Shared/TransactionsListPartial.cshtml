@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Transaction>
+
+
+<table class="table table-sm table-bordered table-condensed text-center">
+    <thead>
+        <tr class="bg-secondary text-white">
+            <th>Account Nr.</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>@transaction.AccountId</td>
+                <td>@transaction.Date.ToString("g")</td>
+                <td>@transaction.Amount.ToString("N2")</td>
+                <td>@transaction.Balance.ToString("N2")</td>
+            </tr>
+        }
+    </tbody>
+</table>

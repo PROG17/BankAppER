@@ -37,6 +37,9 @@ namespace BankAppER.Business
 
         }.AsQueryable();
 
+        private List<Transaction> Transactions { get; set; } = new List<Transaction>();
+
+
         private void InitializeCustomers()
         {
             Customers.ToArray()[0].CustomerAccounts = Accounts.Take(3).ToList();
@@ -53,6 +56,10 @@ namespace BankAppER.Business
 
         public IQueryable<Customer> GetCustomers() => Customers;
 
+        public List<Transaction> GetTransactions(int accountId) => Transactions.Where(c => c.AccountId == accountId).ToList();
+
+        public void AddTransaction(Transaction transaction) => Transactions.Add(transaction);
+     
 
         public bool Deposit(Transaction trans, Account account)
         {
@@ -75,7 +82,7 @@ namespace BankAppER.Business
                 return false;
 
             // Check if withdrawal amount is greater than Balance
-            var newBalance = account.Balance - trans.Amount;
+            var newBalance = account.Balance + trans.Amount; // trans.Amount is < 0 since it is a withdrawal
 
             if (newBalance < 0)
             {

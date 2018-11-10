@@ -20,6 +20,8 @@ namespace BankAppER.Models
 
         public string Message { get; set; }
 
+        public bool IsError { get; set; }
+
         public List<Transaction> Transactions { get; set; }
     }
 }

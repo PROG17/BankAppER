@@ -50,6 +50,9 @@ namespace BankAppER.Controllers
             if (!ModelState.IsValid)
             {
                 model.Message = "Error: Model is not valid";
+
+                model.IsError = true;
+
                 return View(nameof(CreateTransaction), model);
             }
 
@@ -58,6 +61,9 @@ namespace BankAppER.Controllers
             if (account == null)
             {
                 model.Message = "Error: Account number does not exist";
+
+                model.IsError = true;
+
                 return View(nameof(CreateTransaction), model);
             }
 
@@ -75,10 +81,14 @@ namespace BankAppER.Controllers
                 _bankRepo.AddTransaction(currentTransaction);
 
                 model.Message = $"Success: Withdrawal performed. New balance after withdrawal {account.Balance}";
+
+                model.IsError = false;
             }
             else
             {
                 model.Message = $"Error: Withdrawal failed. It is greater than balance. Current balance is {account.Balance}";
+
+                model.IsError = true;
             }
 
             model.Transactions = _bankRepo.GetTransactions(model.AccountId);
@@ -94,6 +104,9 @@ namespace BankAppER.Controllers
             if (!ModelState.IsValid)
             {
                 model.Message = "Error: Model is not valid";
+
+                model.IsError = true;
+
                 return View(nameof(CreateTransaction), model);
             }
 
@@ -102,6 +115,9 @@ namespace BankAppER.Controllers
             if (account == null)
             {
                 model.Message = "Error: Account number does not exist";
+
+                model.IsError = true;
+
                 return View(nameof(CreateTransaction), model);
             }
 
@@ -118,11 +134,15 @@ namespace BankAppER.Controllers
             {
                 _bankRepo.AddTransaction(currentTransaction);
 
-                model.Message = $"Success: Deposit performed. New balance after deposit {account.Balance}";
+                model.Message = $"Success: Deposit performed. New balance after deposit {account.Balance:N2} SEK";
+
+                model.IsError = false;
             }
             else
             {
-                model.Message = $"Error: Deposit failed. Current balance is {account.Balance}";
+                model.Message = $"Error: Deposit failed. Current balance is {account.Balance:N2} SEK";
+
+                model.IsError = true;
             }
 
             model.Transactions = _bankRepo.GetTransactions(model.AccountId);

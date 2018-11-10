@@ -1,9 +1,6 @@
 ﻿@model TransactionViewModel
 
 
-
-<hr />
-
 <div class="row">
 
     <div class="col-10 mx-auto">
@@ -22,7 +19,10 @@
                     <div class="col-md-4">
                         <form asp-controller="AccountOperations" asp-action="CreateTransaction" method="post">
 
-                            <div asp-validation-summary="All" class="text-danger"></div>
+                            @*<div asp-validation-summary="All" class="text-danger"></div>*@
+
+                            <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+
                             <div class="form-group">
                                 <label asp-for="AccountId" class="control-label"></label>
                                 <input asp-for="AccountId" class="form-control" />
@@ -35,7 +35,7 @@
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="Withdrawal" class="btn btn-primary" formaction="WithdrawTransaction" />
-                                <input type="submit" value="Deposit" class="btn btn-primary" formaction="DepositTransaction"/>
+                                <input type="submit" value="Deposit" class="btn btn-primary" formaction="DepositTransaction" />
                             </div>
 
                             <div class="form-group">
@@ -65,10 +65,11 @@
                 </div>
             </div>
         </div>
-        <div>
-            <a asp-controller="Home" asp-action="Index">Back to List</a>
+        <div class="row">
+            <div class="mt-2 ml-2">
+                <a asp-controller="Home" asp-action="Index">Back to Customer List</a>
+            </div>
         </div>
-
     </div>
 </div>
 

@@ -44,7 +44,7 @@ namespace BankAppER.Test
         {
             // ARRANGE
             decimal startBalance = 1000m;
-            decimal withdrawal = 150.00m; // Uttag
+            decimal withdrawal = -150.00m; // Uttag
 
             var bankRepo = new BankRepository();
 
@@ -76,7 +76,7 @@ namespace BankAppER.Test
         {
             // ARRANGE
             decimal startBalance = 100.00m;
-            decimal withdrawal = 150.00m; // Uttag
+            decimal withdrawal = -150.00m; // Uttag
 
             var bankRepo = new BankRepository();
 

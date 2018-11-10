@@ -56,7 +56,7 @@ namespace BankAppER.Business
 
         public IQueryable<Customer> GetCustomers() => Customers;
 
-        public List<Transaction> GetTransactions(int accountId) => Transactions.Where(c => c.AccountId == accountId).ToList();
+        public List<Transaction> GetTransactions(int accountId) => Transactions.Where(c => c.AccountId == accountId).OrderByDescending(d => d.Date).ToList();
 
         public void AddTransaction(Transaction transaction) => Transactions.Add(transaction);
      

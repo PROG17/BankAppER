@@ -12,11 +12,13 @@ namespace BankAppER.Models
             Transactions = new List<Transaction>();
         }
 
+        [Required(ErrorMessage = "Account number is required.")]
         [DisplayName("Account number")]
         public int AccountId { get; set; }
 
-        [Range(0.1, double.MaxValue, ErrorMessage = "Please enter an amount greater than {1}")]
-        public decimal Amount { get; set; }
+        [Required(ErrorMessage = "Amount is required.")]
+      //  [RegularExpression(@"^[0-9]+(\,[0-9]{1,2})$", ErrorMessage = "Valid Decimal number with maximum 2 decimal places.")]
+        public string Amount { get; set; }
 
         public string Message { get; set; }
 

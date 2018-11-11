@@ -1,43 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BankAppER.Business;
 using Microsoft.AspNetCore.Mvc;
-using BankAppER.Models;
+using System.Linq;
+
 
 namespace BankAppER.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly IBankRepository _repo;
+
+        public HomeController(IBankRepository repo)
+        {
+            _repo = repo;
+        }
+
+
         public IActionResult Index()
         {
-            return View();
-        }
+            var model = _repo.GetCustomers().ToList();
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(model);
         }
     }
 }

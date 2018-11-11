@@ -1,0 +1,79 @@
+﻿@model TransactionViewModel
+
+
+<div class="row">
+
+    <div class="col-10 mx-auto">
+
+        <div class="card border-info">
+
+            <div class="card-header bg-info text-white">
+                <div class="row">
+                    <div class="mt-1 ml-2">
+                        <h2>Deposit - Withdrawal</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form asp-controller="AccountOperations" asp-action="CreateTransaction" method="post">
+
+                            @*<div asp-validation-summary="All" class="text-danger"></div>*@
+
+                            <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+
+                            <div class="form-group">
+                                <label asp-for="AccountId" class="control-label"></label>
+                                <input asp-for="AccountId" class="form-control" />
+                                <span asp-validation-for="AccountId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Amount" class="control-label"></label>
+                                <input asp-for="Amount" class="form-control" />
+                                <span asp-validation-for="Amount" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Withdrawal" class="btn btn-primary" formaction="WithdrawTransaction" />
+                                <input type="submit" value="Deposit" class="btn btn-primary" formaction="DepositTransaction" />
+                            </div>
+
+                            <div class="form-group">
+                                @if (Model.IsError)
+                                {
+                                    <div class="bg-warning text-white">
+                                        @Model.Message
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="bg-success text-white">
+                                        @Model.Message
+                                    </div>
+                                }
+
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-md-7 offset-md-1">
+                        @{
+                            await Html.RenderPartialAsync("TransactionsListPartial", Model.Transactions);
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mt-2 ml-2">
+                <a asp-controller="Home" asp-action="Index">Back to Customer List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

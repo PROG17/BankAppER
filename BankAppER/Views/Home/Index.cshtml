@@ -2,57 +2,72 @@
 
 
 
-<div class="card-body">
-    <div class="card-header">
-        <h4>Customer List</h4>
-    </div>
-    <table class="table table-bordered table-condensed text-center">
-        <thead>
-            <tr class="bg-secondary text-white">
-                <th class="text-center">Id</th>
-                <th class="text-center">Name</th>
-                <th class="text-center">Accounts</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var customer in Model)
-            {
-                <tr>
-                    <td>
-                        @customer.Id
-                    </td>
-                    <td>
-                        @customer.Name
-                    </td>
-                    <td>
-                        <table class="table table-sm  text-center">
+<div class="row">
+    <div class="col-10 mx-auto">
+        <div class="card border-info">
+
+            <div class="card-header bg-info text-white">
+                <div class="row">
+                    <div class="mt-1 ml-2">
+                        <h2>Customer List</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <table class="table table-bordered table-condensed text-center">
                             <thead>
                                 <tr class="bg-secondary text-white">
                                     <th class="text-center">Id</th>
-                                    <th class="text-center">Total</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Accounts</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-                                @foreach (var account in customer.CustomerAccounts)
+                                @foreach (var customer in Model)
                                 {
                                     <tr>
                                         <td>
-                                            @account.Id
+                                            @customer.Id
                                         </td>
                                         <td>
-                                            @account.Total
+                                            @customer.Name
+                                        </td>
+                                        <td>
+                                            <table class="table table-sm text-center">
+                                                <thead>
+                                                    <tr class="bg-secondary text-white">
+                                                        <th class="text-center">Account number</th>
+                                                        <th class="text-center">Balance</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @foreach (var account in customer.CustomerAccounts)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @account.Id
+                                                            </td>
+                                                            <td>
+                                                                @account.Balance.ToString("N2") SEK
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
                                         </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
-                    </td>
-                </tr>
-            }
-        </tbody>
-
-
-
-    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+

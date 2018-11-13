@@ -25,5 +25,7 @@ namespace BankAppER.Business
 
         bool Withdrawal(Transaction trans, Account account); // Uttag
 
+        bool Transfer(Account fromAccount, Account toAccount, decimal amount);
+
     }
 }

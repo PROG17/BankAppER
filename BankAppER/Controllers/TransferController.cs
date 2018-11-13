@@ -50,7 +50,7 @@ namespace BankAppER.Controllers
                     
                 else if (toAccount == null)
                     TempData["ToAccountNotFoundErrorMessage"] = $"ToAccount number: {model.ToAccount.Id} was not found!";
-                if (fromAccount.Id == toAccount.Id)
+                if (model.FromAccount.Id == model.ToAccount.Id)
                 {
                     TempData["InvalidAccountOperation"] = $"FromAccount and ToAccount cant be the same account!";
 

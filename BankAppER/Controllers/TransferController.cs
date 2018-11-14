@@ -19,7 +19,7 @@ namespace BankAppER.Controllers
 
         public IActionResult Transfer()
         {
-            return View();
+            return View(new TransferViewModel());
         }
 
         [HttpPost]
@@ -33,14 +33,27 @@ namespace BankAppER.Controllers
                 if (fromAccount != null && toAccount != null &&
                     model.FromAccount.Id != model.ToAccount.Id)
                 {
-                    var result = _bankRepository.Transfer(fromAccount, toAccount, model.Amount);
-                    if (result)
+                    decimal amountInDecimal;
+                    if (Decimal.TryParse(model.Amount,out amountInDecimal) || amountInDecimal > 0)
                     {
-                        TempData["TransferSuccessMessage"] =
-                            $" {model.Amount} SEK was successfully transferred to Account: {model.ToAccount.Id}!";
-                        return RedirectToAction("Transfer");
+                        if (amountInDecimal > 0)
+                        {
+                            var result = _bankRepository.Transfer(fromAccount, toAccount, amountInDecimal);
+                            if (result)
+                            {
+                                TempData["TransferSuccessMessage"] =
+                                    $" {model.Amount} SEK was successfully transferred to Account: {model.ToAccount.Id}! " +
+                                    $"New balance Account #{toAccount.Id}: {toAccount.Balance}, New balance Account #{fromAccount.Id}: {fromAccount.Balance}";
+                                return RedirectToAction("Transfer");
+                            }
+                            TempData["InsufficientBalanceErrorMessage"] = $"FromAccount insufficient funds!";
+                            return View(model);
+                        }
+                        
                     }
-                    TempData["InsufficientBalanceErrorMessage"] = $"FromAccount insufficient funds!";
+                    TempData["InvalidAmountFormatErrorMessage"] = $"Please enter an Amount in the correct format!. Furthermore, the amount cant be zero";
+                    return View(model);
+
                 }
 
                 if (fromAccount == null)

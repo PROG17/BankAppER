@@ -102,6 +102,106 @@ namespace BankAppER.Test
             Assert.Equal(expected_balance, account.Balance);
         }
 
+        [Fact]
+        public void Transfer_results_in_correct_Balance_ToAccount()
+        {
+            // ARRANGE
+            decimal fromAccountStartBalance = 100.00m;
+            decimal amount = 100.00m;
+            int fromAccountId = 1;
+            int toAccountId = 2;
+
+            var bankRepo = new BankRepository();
+
+            var fromAccount = new Account()
+            {
+                Id = 1,
+                Balance = fromAccountStartBalance
+            };
+
+            var toAccount = new Account()
+            {
+                Id = 2,
+                Balance = 0m
+            };
+
+            // ACT
+            var result = bankRepo.Transfer(fromAccount, toAccount, amount);
+
+            // ASSERT
+            var expected_balance_ToAccount = 100.00m;
+
+            Assert.True(result);
+            Assert.Equal(expected_balance_ToAccount, toAccount.Balance);
+        }
+
+        [Fact]
+        public void Transfer_results_in_correct_Balance_FromAccount()
+        {
+            // ARRANGE
+            decimal fromAccountStartBalance = 100.00m;
+            decimal amount = 100.00m;
+            int fromAccountId = 1;
+            int toAccountId = 2;
+
+            var bankRepo = new BankRepository();
+
+            var fromAccount = new Account()
+            {
+                Id = 1,
+                Balance = fromAccountStartBalance
+            };
+
+            var toAccount = new Account()
+            {
+                Id = 2,
+                Balance = 0m
+            };
+
+            // ACT
+            var result = bankRepo.Transfer(fromAccount, toAccount, amount);
+
+            // ASSERT
+            var expected_balance_ToAccount = 0m;
+
+            Assert.True(result);
+            Assert.Equal(expected_balance_ToAccount, fromAccount.Balance);
+        }
+
+        // Skapa en enhetstest som verifierar att det inte går att överföra
+        // mer pengar än det finns saldo på från-kontot.
+        [Fact]
+        public void Transfer_Fails_when_Amount_is_greater_than_FromAccount_Balance()
+        {
+            // ARRANGE
+            decimal fromAccountStartBalance = 100.00m;
+            decimal amount = 200.00m;
+            int fromAccountId = 1;
+            int toAccountId = 2;
+
+            var bankRepo = new BankRepository();
+
+            var fromAccount = new Account()
+            {
+                Id = 1,
+                Balance = fromAccountStartBalance
+            };
+
+            var toAccount = new Account()
+            {
+                Id = 2,
+                Balance = 0m
+            };
+
+            // ACT
+            var result = bankRepo.Transfer(fromAccount, toAccount, amount);
+
+            // ASSERT
+
+            Assert.False(result);
+            
+        }
+
 
 
 

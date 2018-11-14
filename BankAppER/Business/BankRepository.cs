@@ -98,9 +98,26 @@ namespace BankAppER.Business
             return true;
         }
 
+        public bool Transfer(Account fromAccount, Account toAccount, decimal amount)
+        {
+            if (fromAccount.Id == toAccount.Id)
+            {
+                throw new ArgumentException("SameAccountIdException");
+            }
 
+            if (amount < 0)
+            {
+                throw new ArgumentException("InvalidAmountException");
+            }
 
-           
+            if (amount > fromAccount.Balance)
+            {
+                return false;
+            }
+            fromAccount.Balance -= amount;
+            toAccount.Balance += amount;
+            return true;
+        }
 
 
         //// Deposit (insättning) is exactly the same method as Withdrawal!!

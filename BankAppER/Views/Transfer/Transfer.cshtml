@@ -1,0 +1,60 @@
+﻿@model TransferViewModel
+
+@{
+    ViewData["Title"] = "Transfer";
+}
+
+
+<h2>Transfer funds</h2>
+
+@if (TempData["FromAccountNotFoundErrorMessage"] != null)
+{
+    <div class="alert alert-danger mt-1">@TempData["FromAccountNotFoundErrorMessage"]</div>
+}
+@if (TempData["ToAccountNotFoundErrorMessage"] != null)
+{
+    <div class="alert alert-danger mt-1">@TempData["ToAccountNotFoundErrorMessage"]</div>
+}
+@if (TempData["InvalidAccountOperation"] != null)
+{
+    <div class="alert alert-danger mt-1">@TempData["InvalidAccountOperation"]</div>
+}
+@if (TempData["InsufficientBalanceErrorMessage"] != null)
+{
+    <div class="alert alert-danger mt-1">@TempData["InsufficientBalanceErrorMessage"]</div>
+}
+
+@if (TempData["TransferSuccessMessage"] != null)
+{
+    <div class="alert alert-success mt-1">@TempData["TransferSuccessMessage"]</div>
+}
+@if (TempData["InvalidAmountFormatErrorMessage"] != null)
+{
+    <div class="alert alert-danger mt-1">@TempData["InvalidAmountFormatErrorMessage"]</div>
+}
+
+
+<div class="text-danger" asp-validation-summary="All"></div>
+<form asp-action="Transfer" method="post">
+    <div class="form-group">
+        <label asp-for="FromAccount">From Account:</label>
+        <div><span asp-validation-for="FromAccount.Id" class="text-danger"></span></div>
+        <input asp-for="FromAccount.Id" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="ToAccount">To Account:</label>
+        <div><span asp-validation-for="ToAccount.Id" class="text-danger"></span></div>
+        <input asp-for="ToAccount.Id" class="form-control">
+    </div>
+    <div class="form-group">
+        <label asp-for="Amount">Amount:</label>
+        <div><span asp-validation-for="Amount" class="text-danger"></span></div>
+        <input asp-for="Amount" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-default">Transfer funds</button>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
